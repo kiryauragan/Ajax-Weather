@@ -5,7 +5,7 @@ const searchCity = document.querySelector(".search input");
 const searchButton = document.querySelector(".search button");
 const weatherIcon = document.querySelector(".weather-icon");
 
-const city = document.querySelector(".city");
+const cityName = document.querySelector(".city");
 const description = document.querySelector(".description");
 const temp = document.querySelector(".temp");
 const humidity = document.querySelector(".humidity");
@@ -24,7 +24,7 @@ async function checkWeather(city) {
 
     console.log(data);
 
-    city.innerHTML = data.name;
+    cityName.innerHTML = data.name;
     description.innerHTML = data.weather[0].description;
     temp.innerHTML = Math.round(data.main.temp) + " °c";
     humidity.innerHTML = data.main.humidity + " %";
