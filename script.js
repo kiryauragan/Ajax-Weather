@@ -5,54 +5,63 @@ const searchCity = document.querySelector(".search input");
 const searchButton = document.querySelector(".search button");
 const weatherIcon = document.querySelector(".weather-icon");
 
+const city = document.querySelector(".city");
+const description = document.querySelector(".description");
+const temp = document.querySelector(".temp");
+const humidity = document.querySelector(".humidity");
+const wind = document.querySelector(".wind");
+const pressure = document.querySelector(".pressure");
+const winddegree = document.querySelector(".winddegree");
+
 async function checkWeather(city) {
-    const response = await fetch(apiUrl + city + `&appid=${apiKey}`);
+  const response = await fetch(apiUrl + city + `&appid=${apiKey}`);
 
-    if(response.status == 404) {
-        document.querySelector(".error").style.display = "block";
-        document.querySelector(".weather").style.display = "none";
-    } else {
+  if (response.status == 404) {
+    document.querySelector(".error").style.display = "block";
+    document.querySelector(".weather").style.display = "none";
+  } else {
+  }
 
-    }
+  let data = await response.json();
 
-    let data = await response.json();
+  console.log(data);
 
-    console.log(data);
+  city.innerHTML = data.name;
+  description.innerHTML = data.weather[0].description;
+  temp.innerHTML = Math.round(data.main.temp) + " °c";
+  humidity.innerHTML = data.main.humidity + " %";
+  wind.innerHTML = data.wind.speed + " km/h";
+  pressure.innerHTML = data.main.pressure + " Pa";
+  winddegree.innerHTML = data.wind.deg;
 
-    document.querySelector(".city").innerHTML = data.name;
-    document.querySelector(".description").innerHTML = data.weather[0].description;
-    document.querySelector(".temp").innerHTML = Math.round(data.main.temp) + " °c";
-    document.querySelector(".humidity").innerHTML = data.main.humidity + " %";
-    document.querySelector(".wind").innerHTML = data.wind.speed + " km/h";
-    document.querySelector(".pressure").innerHTML = data.main.pressure + " Pa";
-    document.querySelector(".winddegree").innerHTML = data.wind.deg;
+  switch (data.weather[0].main) {
+    case "Clouds":
+      weatherIcon.src = "img/clouds.png";
+      break;
+    case "Rain":
+      weatherIcon.src = "img/rain.png";
+      break;
+    case "Drizzle":
+      weatherIcon.src = "img/drizzle.png";
+      break;
+    case "Mist":
+      weatherIcon.src = "img/mist.png";
+      break;
+    case "Clear":
+      weatherIcon.src = "img/clear.png";
+      break;
+    case "Snow":
+      weatherIcon.src = "img/snow.png";
+      break;
+    default:
+      weatherIcon.src = "img/clear.png";
+      break;
+  }
 
-    if(data.weather[0].main == "Clouds") {
-        weatherIcon.src = "img/clouds.png";
-    } 
-    else if (data.weather[0].main == "Rain") {
-        weatherIcon.src = "img/rain.png";
-    }
-    else if (data.weather[0].main == "Drizzle") {
-        weatherIcon.src = "img/drizzle.png";
-    }
-    else if (data.weather[0].main == "Mist") {
-        weatherIcon.src = "img/mist.png";
-    }
-    else if (data.weather[0].main == "Clear") {
-        weatherIcon.src = "img/clear.png";
-    }
-    else if (data.weather[0].main == "Snow") {
-        weatherIcon.src = "img/snow.png";
-    }
-
-    document.querySelector(".weather").style.display = "block";
-    document.querySelector(".error").style.display = "none";
+  document.querySelector(".weather").style.display = "block";
+  document.querySelector(".error").style.display = "none";
 }
 
-
-searchButton.addEventListener("click", ()=> {
-    checkWeather(searchCity.value);
-
+searchButton.addEventListener("click", () => {
+  checkWeather(searchCity.value);
 });
-
