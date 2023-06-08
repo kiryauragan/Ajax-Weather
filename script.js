@@ -13,8 +13,8 @@ const wind = document.querySelector(".wind");
 const pressure = document.querySelector(".pressure");
 const winddegree = document.querySelector(".winddegree");
 
-async function checkWeather(cityName) {
-  const response = await fetch(apiUrl + cityName + `&appid=${apiKey}`);
+async function checkWeather(city) {
+  const response = await fetch(apiUrl + city + `&appid=${apiKey}`);
 
   if (response.status == 404) {
     document.querySelector(".error").style.display = "block";
@@ -24,45 +24,40 @@ async function checkWeather(cityName) {
 
     console.log(data);
 
-    if (data.weather && data.weather.length > 0) {
-      city.innerHTML = data.name;
-      description.innerHTML = data.weather[0].description;
-      temp.innerHTML = Math.round(data.main.temp) + " °c";
-      humidity.innerHTML = data.main.humidity + " %";
-      wind.innerHTML = data.wind.speed + " km/h";
-      pressure.innerHTML = data.main.pressure + " Pa";
-      winddegree.innerHTML = data.wind.deg;
+    city.innerHTML = data.name;
+    description.innerHTML = data.weather[0].description;
+    temp.innerHTML = Math.round(data.main.temp) + " °c";
+    humidity.innerHTML = data.main.humidity + " %";
+    wind.innerHTML = data.wind.speed + " km/h";
+    pressure.innerHTML = data.main.pressure + " Pa";
+    winddegree.innerHTML = data.wind.deg;
 
-      switch (data.weather[0].main) {
-        case "Clouds":
-          weatherIcon.src = "img/clouds.png";
-          break;
-        case "Rain":
-          weatherIcon.src = "img/rain.png";
-          break;
-        case "Drizzle":
-          weatherIcon.src = "img/drizzle.png";
-          break;
-        case "Mist":
-          weatherIcon.src = "img/mist.png";
-          break;
-        case "Clear":
-          weatherIcon.src = "img/clear.png";
-          break;
-        case "Snow":
-          weatherIcon.src = "img/snow.png";
-          break;
-        default:
-          weatherIcon.src = "img/clear.png";
-          break;
-      }
-
-      document.querySelector(".weather").style.display = "block";
-      document.querySelector(".error").style.display = "none";
-    } else {
-      document.querySelector(".error").style.display = "block";
-      document.querySelector(".weather").style.display = "none";
+    switch (data.weather[0].main) {
+      case "Clouds":
+        weatherIcon.src = "img/clouds.png";
+        break;
+      case "Rain":
+        weatherIcon.src = "img/rain.png";
+        break;
+      case "Drizzle":
+        weatherIcon.src = "img/drizzle.png";
+        break;
+      case "Mist":
+        weatherIcon.src = "img/mist.png";
+        break;
+      case "Clear":
+        weatherIcon.src = "img/clear.png";
+        break;
+      case "Snow":
+        weatherIcon.src = "img/snow.png";
+        break;
+      default:
+        weatherIcon.src = "img/clear.png";
+        break;
     }
+
+    document.querySelector(".weather").style.display = "block";
+    document.querySelector(".error").style.display = "none";
   }
 }
 
